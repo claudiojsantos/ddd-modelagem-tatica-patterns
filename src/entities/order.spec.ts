@@ -21,13 +21,20 @@ describe('Order unit test', () => {
   });
 
   it('should calculate total', () => {
-    let item01 = new OrderItem('i1', 'item 01', 20.0);
-    let item02 = new OrderItem('i2', 'item 02', 35.0);
-    let item03 = new OrderItem('i3', 'item 03', 56.0);
+    let item01 = new OrderItem('i1', 'item 01', 20.0, "p1", 2);
+    let item02 = new OrderItem('i2', 'item 02', 35.0, "p2", 4);
+    let item03 = new OrderItem('i3', 'item 03', 56.0, "p3", 2);
 
     let order = new Order('1', '123', [item01, item02, item03]);
     let total = order.total();
 
-    expect(total).toBe(111.00)
+    expect(total).toBe(292.00)
+  });
+
+  it('should thrown error if the item quantity is greater than 0', () => {
+    expect(() => {
+      let item01 = new OrderItem('i1', 'item 01', 20.0, "p1", 0);
+      let order = new Order('1', '123', [item01]);
+    }).toThrowError('Quantity must be greater than 0')
   });
 });
